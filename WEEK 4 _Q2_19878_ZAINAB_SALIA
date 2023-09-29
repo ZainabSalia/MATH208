@@ -1,0 +1,38 @@
+import random
+import matplotlib.pyplot as plt
+
+# Generate 500 random numbers from Gaussian distribution with mean=10 and std_dev=0.5
+numbers = [random.gauss(10, 0.5) for _ in range(500)]
+
+# User-defined function to calculate mean
+def calculate_mean(numbers):
+    return sum(numbers) / len(numbers)
+
+# User-defined function to calculate median
+def calculate_median(numbers):
+    numbers.sort()
+    n = len(numbers)
+    if n % 2 == 0:
+        median1 = numbers[n//2]
+        median2 = numbers[n//2 - 1]
+        median = (median1 + median2)/2
+    else:
+        median = numbers[n//2]
+    return median
+
+# User-defined function to calculate standard deviation
+def calculate_std_dev(numbers, mean):
+    variance = sum((x - mean) ** 2 for x in numbers) / len(numbers)
+    return variance ** 0.5
+
+mean = calculate_mean(numbers)
+median = calculate_median(numbers)
+std_dev = calculate_std_dev(numbers, mean)
+
+print(f"Mean: {mean}")
+print(f"Median: {median}")
+print(f"Standard Deviation: {std_dev}")
+
+# Plot histogram with 10 bins
+plt.hist(numbers, bins=10)
+plt.show()
