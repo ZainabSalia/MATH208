@@ -1,0 +1,53 @@
+import numpy as np
+from scipy import stats
+
+ages = [11, 14, 15, 15, 16, 16, 17, 18, 19, 21, 25, 36,
+        12, 14, 15, 15, 16, 16, 17, 18, 19, 21, 25, 39,
+        13, 14, 15, 15, 16, 17, 17, 18, 20, 22, 26, 43,
+        13, 14, 15, 15, 16, 17, 17, 18, 20,22 ,26 ,46,
+        13 ,14 ,15 ,16 ,16 ,17 ,17 ,18 ,20 ,22 ,27 ,50,
+        13 ,14 ,15 ,16 ,16 ,17 ,17 ,19 ,20 ,23 ,27 ,54,
+        13 ,14 ,15 ,16 ,16 ,17 ,18 ,19 ,20 ,23 ,29 ,59,
+        13 ,14 ,15 ,16 ,16 ,17 ,18 ,19 ,20 ,23 ,30 ,
+        14 ,	15,	15,	16,	16,	17,	18,	19,	21,	24,	31,
+       	14 ,  	15,	15,	16,	16,	17,	18,	19,	21,	24]
+
+def calculate_median(numbers):
+    numbers.sort()
+    n = len(numbers)
+    if n %2 ==0:
+        median1 = numbers[n//2]
+        median2 = numbers[n//2 -1]
+        median = (median1 + median2)/2
+    else:
+        median = numbers[n//2]
+    return median
+
+def calculate_mode(numbers):
+    mode = max(set(numbers), key = numbers.count)
+    return mode
+
+def calculate_percentile(numbers,p):
+    numbers.sort()
+    k = (len(numbers)-1) * p
+    f = np.floor(k)
+    c = np.ceil(k)
+    if f == c:
+        return numbers[int(k)]
+    d0 = numbers[int(f)] * (c-k)
+    d1 = numbers[int(c)] * (k-f)
+    return d0+d1
+
+median = calculate_median(ages)
+mode = calculate_mode(ages)
+Q1 = calculate_percentile(ages,.25)
+Q3 = calculate_percentile(ages,.75)
+P10 = calculate_percentile(ages,.10)
+P95 = calculate_percentile(ages,.95)
+
+print(f"Median: {median}")
+print(f"Mode: {mode}")
+print(f"Q1: {Q1}")
+print(f"Q3: {Q3}")
+print(f"P10: {P10}")
+print(f"P95: {P95}")
